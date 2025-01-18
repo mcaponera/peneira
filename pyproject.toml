@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "peneira"
+version = "0.1.0"
+description = "crawler para raspar ascompetições femininas de futebol do brasil"
+authors = ["Marina Caponera <m.caponera@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+scrapy = "^2.12.0"
+
+
+[tool.poetry.group.dev.dependencies]
+ipython = "^8.31.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
