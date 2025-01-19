@@ -20,3 +20,8 @@ class PeneiraoSpider(scrapy.Spider):
                 callback=self.parse_year,
                 meta={'year': year}
             )
+
+    def parse_year(self, response):
+        year = response.meta['year']
+        contests_ = json.loads(response.text)
+        contests = contests_[1]

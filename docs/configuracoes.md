@@ -1,0 +1,3 @@
+# das configurações
+algumas configurações são necessárias para o servidor aceitar as requisições feitas pelo `scrapy`, em especial `USER_AGENT` e `DEFAULT_REQUEST_HEADERS`, o  [htttpbin.org/headers](https://httpbin.org/headers) pode ajudar nisso.
+não pesar a mão na quantidade de requisições e no tempo entre elas também é interessante (`DOWNLOAD_DELAY`, `CONCURRENT_REQUESTS`, `CONCURRENT_REQUESTS_PER_DOMAIN`), habilitar o AutoThrottle é importante
