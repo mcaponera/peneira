@@ -21,6 +21,7 @@ plugins:
       blog_dir: blog
 
 theme:
+  language: pt-BR
   features:
     - navigation.footer
     - navigation.indexes
