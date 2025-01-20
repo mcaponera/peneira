@@ -36,7 +36,8 @@ theme:
         name: modo escuro
       primary: red
       accent: teal 
-    
+
+    # light mode
     - scheme: default
       toggle:
         icon: material/weather-night

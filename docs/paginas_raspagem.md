@@ -12,26 +12,25 @@ navegando pelo site e com a ajuda do devtools, conseguimos identificar como as u
 | `/getAll/{rodada}/{id_campeonato}/{ano}` | https://portaldegovernanca.cbf.com.br/documentos-da-partida/getAll/1/12503/2021 |
 
 ## `/documentos-da-partida`
+essa é a única url em que extraímos conteúdo do html, nas outras, como veremos, as respostas são sempre documentos.
 
 ```py title="lógica da extração" 
-anos_req = requests.get('https://portaldegovernanca.cbf.com.br/documentos-da-partida')
-anos_lista = anos_req.xpath(
+response = requests.get('https://portaldegovernanca.cbf.com.br/documentos-da-partida')
+years_ = response.xpath(
     "//div[2]/div[2]/div/form/div/div/select[@id='ano']/option/text()"
     ).extract()
 
 # Out[73]  `['Todos os anos', '2025', '2024', '2023', '2022', '2021']`
 
-anos_lista = []
-for ano in anos:
-    if ano.isdigit():
-        anos_lista.append(int(ano))
+years = [int(year) for year in years_ if year.isdigit()]
 ```
 assim podemos construir a próxima url.
 
 ## `/documentos-da-partida/campeonatos/{ano}`
 
+
 ```py title="lógica de extração"
-competicoes = json.loads(response.text)
+contests_ = json.loads(response.text)
 
 # Out[75]:  
 #    {
@@ -39,13 +38,14 @@ competicoes = json.loads(response.text)
 #           'id_campeonato': 12503
 #    },
 
-info_campeonatos = [(competicoes['id_campeonato'], competicoes['Campeonato_Categoria']) for competicoe in competicoes]
-print(info_campeonatos)
+contests = [(contest['id_campeonato'], contest['Campeonato_Categoria']) for contest in contests_]
+print(contests)
 # Out[76]:
 # [(12502, 'Amistoso - Seleção Brasileira de Futsal'), (12503, 'Amistoso - Seleção Brasileira Feminina'), ...]
 ```
 
 ## `rodadas/{id_campeonato}/{ano}` 
+
 
 ``` title="texto do response"
 [{'Rodada': 1},
