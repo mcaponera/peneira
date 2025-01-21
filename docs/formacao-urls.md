@@ -115,4 +115,4 @@ jogos['dados'][1]
 #       'function_js': 'onclick="docNaoPublicado();"'
 #   }
 ```
-dessa forma temos a maior parte dos itens de interesse mapeados. temos os padrões para a formação das urls, e as informações que queremos recuperar.
+finalmente temos os padrões para a formação das urls, e as informações que queremos coletar.

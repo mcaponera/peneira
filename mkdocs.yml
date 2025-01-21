@@ -12,7 +12,8 @@ nav:
   - peneira spider:
     - é o que: index.md
     - configurações: configuracoes.md
-    - objeto da raspagem: paginas_raspagem.md
+    - objeto da raspagem: formacao-urls.md
+    - raspador: crawler.md
   - blog: blog/index.md
 
 plugins:
@@ -25,6 +26,7 @@ theme:
   features:
     - navigation.footer
     - navigation.indexes
+    - content.tabs.link
   icon:
     logo: material/chart-ppf
   name: material
