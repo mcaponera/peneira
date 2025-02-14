@@ -1,9 +1,10 @@
-import datetime
 import json
 import re
 from urllib.parse import urljoin
 
 import scrapy
+
+from peneira.items import PeneiraItem
 
 
 class PeneiraoSpider(scrapy.Spider):
@@ -33,21 +34,22 @@ class PeneiraoSpider(scrapy.Spider):
         ]
 
         for i in contests:
-            id = i[0]
-            tournament_name = i[1]
-            next_url = urljoin(
-                response.url, f'/documentos-da-partida/rodadas/{id}/{year}'
-            )
+            if re.search(r'\bfemin', i[1], re.IGNORECASE):
+                id = i[0]
+                tournament_name = i[1]
+                next_url = urljoin(
+                    response.url, f'/documentos-da-partida/rodadas/{id}/{year}'
+                )
 
-            yield scrapy.Request(
-                url=next_url,
-                callback=self.parse_contest,
-                meta={
-                    'year': year,
-                    'id': id,
-                    'tournament_name': tournament_name,
-                },
-            )
+                yield scrapy.Request(
+                    url=next_url,
+                    callback=self.parse_contest,
+                    meta={
+                        'year': year,
+                        'id': id,
+                        'tournament_name': tournament_name,
+                    },
+                )
 
     def parse_contest(self, response):
         year = response.meta['year']
@@ -73,40 +75,37 @@ class PeneiraoSpider(scrapy.Spider):
             )
 
     def parse_turn(self, response):
-        year = response.meta['year']
         id = response.meta['id']
+        year = response.meta['year']
         tournament_name = response.meta['tournament_name']
         games_ = response.json()
 
         for game in games_['dados']:
+            p = PeneiraItem()
+
             match = re.search(r'onclick="(\w+)\(\);"', game['function_js'])
             function_name = match.group(1) if match else 'sim'
-            date_text = game['Jogo_DataOri']
-            date = datetime.datetime.strptime(date_text, '%d/%m/%Y').date()
-            year_date = datetime.datetime.strptime(str(year), '%Y').date()
-            time_text = game['Horario']
-            time = datetime.datetime.strptime(time_text, '%H:%M').time()
 
-            yield {
-                'ano': year_date,
-                'id_url': id,
-                'campeonato': tournament_name,
-                'id_campeonato': game['Codigo_Campeonato'],
-                'cod_categoria': game['Codigo_Categoria'],
-                'time_mandante': game['TimeNomeMandante'],
-                'time_visitante': game['TimeNomeVisitante'],
-                'time_mandante_UF': game['UFTimeMandante'],
-                'time_visitante_UF': game['UFTimeVisitante'],
-                'resultado': game['Resultado'],
-                'data_jogo': date,
-                'hora_jogo': time,
-                'num_jogo': game['Num_Jogo'],
-                'rodada': game['Rodada'],
-                'estadio': game['EstadioNomePopular'],
-                'estadio_UF': game['UFEstadio'],
-                'estadio_municipio': game['MunicipioEstadio'],
-                'url_sumula': game['url_sumula'],
-                'url_boletim': game['url_boletim'],
-                'url_rdj': game['url_rdj'],
-                'publicado': function_name,
-            }
+            p['ano'] = year
+            p['id_url'] = id
+            p['campeonato'] = tournament_name
+            p['id_campeonato'] = game['Codigo_Campeonato']
+            p['cod_categoria'] = game['Codigo_Categoria']
+            p['time_mandante'] = game['TimeNomeMandante']
+            p['time_mandante_UF'] = game['UFTimeMandante']
+            p['resultado'] = game['Resultado']
+            p['time_visitante'] = game['TimeNomeVisitante']
+            p['time_visitante_UF'] = game['UFTimeVisitante']
+            p['data_jogo'] = game['Jogo_DataOri']
+            p['hora_jogo'] = game['Horario']
+            p['num_jogo'] = game['Num_Jogo']
+            p['rodada'] = game['Rodada']
+            p['estadio'] = game['EstadioNomePopular']
+            p['estadio_UF'] = game['UFEstadio']
+            p['estadio_municipio'] = game['MunicipioEstadio']
+            p['url_sumula'] = game['url_sumula']
+            p['url_boletim'] = game['url_boletim']
+            p['url_rdj'] = game['url_rdj']
+            p['publicado'] = function_name
+
+            yield p
