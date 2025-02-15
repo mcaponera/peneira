@@ -1,8 +1,7 @@
-from typing import Annotated, Literal
-from pydantic import BaseModel, HttpUrl
 from datetime import date, time
 
 import scrapy
+from pydantic import BaseModel, HttpUrl
 
 
 class PeneiraItemSchema(BaseModel):

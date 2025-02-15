@@ -1,8 +1,8 @@
 import datetime
-import requests
 
 from peneira.pipelines import DataPipeline
 
+EXPECTED_YEAR = 2022
 
 def test_data_pipeline():
     item = {
@@ -39,7 +39,7 @@ def test_data_pipeline():
 
     processed_item = pipeline.process_item(item, spider=None)
 
-    assert processed_item['ano'] == 2022
+    assert processed_item['ano'] == EXPECTED_YEAR
     assert processed_item['data_jogo'] == datetime.date(2022, 7, 2)
     assert processed_item['hora_jogo'] == datetime.time(15, 0)
     assert processed_item['url_boletim'] == [
