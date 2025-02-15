@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://site.example/</loc>
+         <lastmod>2025-02-15</lastmod>
+    </url>
+    <url>
+         <loc>https://site.example/configuracoes/</loc>
+         <lastmod>2025-02-15</lastmod>
+    </url>
+    <url>
+         <loc>https://site.example/crawler/</loc>
+         <lastmod>2025-02-15</lastmod>
+    </url>
+    <url>
+         <loc>https://site.example/formacao-urls/</loc>
+         <lastmod>2025-02-15</lastmod>
+    </url>
+    <url>
+         <loc>https://site.example/blog/</loc>
+         <lastmod>2025-02-15</lastmod>
+    </url>
+    <url>
+         <loc>https://site.example/blog/2024/01/19/ol%C3%A1-mundo/</loc>
+         <lastmod>2025-02-15</lastmod>
+    </url>
+    <url>
+         <loc>https://site.example/blog/archive/2024/</loc>
+         <lastmod>2025-02-15</lastmod>
+    </url>
+    <url>
+         <loc>https://site.example/blog/category/hello-world/</loc>
+         <lastmod>2025-02-15</lastmod>
+    </url>
+</urlset>
